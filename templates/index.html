@@ -1,0 +1,32 @@
+<head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">// <![CDATA[
+        function loading(){
+            $("#loading").show();
+            $("#content").hide();       
+        }
+// ]]>
+</script>
+</head>
+
+{% extends 'base.html' %}
+{% block title %}HH Parcer - Flask{% endblock %}
+{% block content %}
+<div id="controls" class="row">
+	<div id="input" class="column">
+	<form method="POST" action ="/">
+		<div class="form-group">
+			<label for="vacancy">Название вакансии:</label>
+			<input type="text" class ="form-control" name="vacancy">
+		</div>
+		<button type="submit" class="btn btn-primary mt-3" onclick="loading();">Искать</button>
+	</form>
+	</div>
+</div>
+<div id="loading">
+<img src='/static/loading.gif'/>
+</div>
+<div>
+	<p>{{err}}<p>
+</div>
+{% endblock %}

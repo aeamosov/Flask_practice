@@ -1,0 +1,69 @@
+<head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">// <![CDATA[
+        function loading(){
+            $("#loading").show();
+            $("#content").hide();       
+        }
+// ]]>
+</script>
+<style>
+</style>
+</head>
+{% extends 'base.html' %}
+{% block title %}HH Parcer - Flask{% endblock %}
+{% block content %}
+
+<div id="controls" class="row">
+    <div id="input" class="column">
+        <form method="POST" action ="/">
+            <div class="form-group">
+                <label for="vacancy">Название вакансии:</label>
+                <input type="text" class ="form-control" name="vacancy" value="{{req}}">
+            </div>
+            <button type="submit" class="btn btn-primary mt-3" onclick="loading();">Искать</button>
+        </form>
+		<div id="loading">
+			<img src='/static/loading.gif'/>
+		</div>
+    </div>
+    <div id="clear" class="column">
+    <form action="/clear/" method="post">
+        <button id="clearBtn" name="clearBtn" type="submit" class="btn btn-primary mt-3">Очистить результаты</button>
+    </form>
+    </div>
+</div>
+
+
+
+<h3>Выгрузка по запросу "{{req}}"</h3>
+<table>
+	<tr>
+	<th>Имя вакансии</th>
+	<th>Город</th>
+	<th>Ссылка</th>
+	<th>Работодатель</th>
+	<th>ЗП (руб., Gross)</th>
+	</tr>
+		{%for index, row in vacancies_table.iterrows() %}
+		<tr>
+		<td>
+		{{row['name']}}
+		</td>
+		<td>
+		{{row['area']}}
+		</td>
+		<td>
+		{{row['url']}}
+		</td>
+		<td>
+		{{row['employer']}}
+		</td>
+		<td>
+		{{row['salary_gross_RUR']}}
+		</td>
+		</tr>
+		{%endfor %}
+</table>
+
+{% endblock %}

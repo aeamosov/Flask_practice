@@ -1,0 +1,27 @@
+table {
+	border-collapse: collapse;
+	border: 3px solid darkgreen;
+	text-align: center;
+}
+th,td {
+	padding: 4px;
+}
+#form-group {
+	width:40%;
+}
+.column {
+  float: left;
+  width: 40%;
+}
+#clearBtn {
+	background-color:darkred;
+	border: 3px black;
+	padding:3px;}
+#loading {
+	width: 5%;
+	heigh: 5%;
+	align: center;
+    display: none;
+    background: url(/static/loading.gif);
+    cursor: wait;
+    }
