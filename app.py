@@ -5,6 +5,7 @@ import pandas as pd
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+from transliterate import slugify
 app = Flask(__name__)
 #conversion functions for salary
 conversion_rates = {'USD': 90,'EUR': 110,'KZT': 0.20}
@@ -88,8 +89,9 @@ def get_vacancies():
 		#Гистограмма
 		plt.clf()
 		plt.hist(df['salary_gross_RUR'])
-		plt.savefig("static/last_salary_hist_"+text+".png")
-		return render_template('results.html',vacancies_table=df,req=request.form['vacancy'])
+		hist_img_path="static/images/last_salary_hist_"+slugify(text)+".png"
+		plt.savefig(hist_img_path)
+		return render_template('results.html',vacancies_table=df,req=request.form['vacancy'],hist_img_path=hist_img_path)
 
 	except Exception as error:
 		return render_template('index.html',err='Ошибка при загрузке'+str(error)+'\n Вот что отдало API:'+str(page_content))
