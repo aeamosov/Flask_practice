@@ -54,6 +54,13 @@ def clean_url(hh_url):
 		if i.isdigit():
 			url+=str(i)
 	return url
+def get_vac_id(hh_url):
+	vac_id=''
+	for i in hh_url:
+		if i.isdigit():
+			vac_id+=str(i)
+	vac_id=int(vac_id)
+	return vac_id
 #Получение вакансий
 @app.route('/',methods=['GET', 'POST'])
 def get_vacancies():
@@ -78,6 +85,7 @@ def get_vacancies():
 		df['area']=df['area'].apply(get_city)
 		df['employer']=df['employer'].apply(get_employer)
 		df['url']=df['url'].apply(clean_url)
+		df['vac_id']=df['url'].apply(get_vac_id)
 		#Фильтруем вакансии по зп и обрабатываем их
 		df = df[df['salary'].notna()].reset_index(drop=True)
 		df['salary_RUR']=df['salary'].apply(process_salary)
@@ -85,10 +93,11 @@ def get_vacancies():
 		df.loc[df['salary_RUR'].apply(lambda x: not x['gross']), 'single_number_RUR'] /= 0.87
 		df['salary_gross_RUR']=df['single_number_RUR'].apply(round)
 	
-		df=df[['name','area','url','employer','salary_gross_RUR']].reset_index(drop=True)
+		df=df[['vac_id','name','area','url','employer','salary_gross_RUR']].reset_index(drop=True)
 		#Гистограмма
 		plt.clf()
 		plt.hist(df['salary_gross_RUR'])
+		plt.title("Распределение ЗП по позиции "+text)
 		hist_img_path="static/images/last_salary_hist_"+str(dt.datetime.now().timestamp())+".png"
 		plt.savefig(hist_img_path)
 		return render_template('results.html',vacancies_table=df,req=request.form['vacancy'],hist_img_path=hist_img_path)

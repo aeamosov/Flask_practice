@@ -5,7 +5,9 @@ table {
 	word-break: break-word;
 }
 th,td {
-	padding: 4px;
+	padding: 7px;
+	border: 1px solid black;
+	font-size:14px;
 }
 #form-group {
 	width:40%;

@@ -37,11 +37,12 @@
 	</div>
 </div>
 
-<h3>Выгрузка по запросу "{{req}}"</h3>
+<h5>Выгрузка по запросу "{{req}}"</h5>
 <div class="row">
 	<div class="col-7 bg-light p-3 border">
 		<table>
 			<tr>
+			<th>ID</th>
 			<th>Имя вакансии</th>
 			<th>Город</th>
 			<th>Ссылка</th>
@@ -51,9 +52,12 @@
 				{%for index, row in vacancies_table.iterrows() %}
 				<tr>
 				<td>
+				{{row['vac_id']}}
+				</td>
+				<td style="width:25%;">
 				{{row['name']}}
 				</td>
-				<td>
+				<td style="width:10%;">
 				{{row['area']}}
 				</td>
 				<td>
@@ -70,7 +74,7 @@
 		</table>
 	</div>
 	
-	<div class="col">
+	<div class="bd-placeholder-img col-md-5 float-md-end">
 	<img style="display:block; width:100%;" src="{{hist_img_path}}"/>
 	</div>
 	
