@@ -1,2 +1,2 @@
-\images\*.png
-\venv\*
+/images/*.png
+/venv/*
