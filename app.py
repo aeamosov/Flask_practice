@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, redirect
 import numpy as np
 import requests
 import pandas as pd
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 app = Flask(__name__)
 #conversion functions for salary
@@ -60,15 +62,16 @@ def get_vacancies():
 		return render_template('index.html')
 	try:
 		target_url='https://api.hh.ru/vacancies?text='+text
-		r = requests.get(target_url).json() 
+		r = requests.get(target_url,params={'only_with_salary':'true'}).json() 
 		p=r['pages'] 
 		#требуемые поля выгрузки
 		vac = {'id':[],'name':[],'area':[],'salary':[],'address':[],'url':[],'employer':[],'snippet':[]}
 		for i in range(0, p):
-			page_content=requests.get(target_url, params={'page': i, 'per_page':20}).json()['items']
-			for j in range(0,len(page_content)):
+			page_content=requests.get(target_url, params={'page': i, 'per_page':20}).json()
+			page_content_items=page_content['items']
+			for j in range(0,len(page_content_items)):
 				for k in vac.keys():
-					vac[k].append(page_content[j].get(k))
+					vac[k].append(page_content_items[j].get(k))
 		df=pd.DataFrame.from_dict(vac, orient='columns')
 		#Очищаем названия городов,работодателей, URL
 		df['area']=df['area'].apply(get_city)
@@ -82,9 +85,14 @@ def get_vacancies():
 		df['salary_gross_RUR']=df['single_number_RUR'].apply(round)
 	
 		df=df[['name','area','url','employer','salary_gross_RUR']].reset_index(drop=True)
+		#Гистограмма
+		plt.clf()
+		plt.hist(df['salary_gross_RUR'])
+		plt.savefig("static/last_salary_hist_"+text+".png")
 		return render_template('results.html',vacancies_table=df,req=request.form['vacancy'])
+
 	except Exception as error:
-		return render_template('index.html',err='Ошибка при загрузке'+str(error)+'\n Вот что отдало API:'+str(r))
+		return render_template('index.html',err='Ошибка при загрузке'+str(error)+'\n Вот что отдало API:'+str(page_content))
 @app.route("/clear/",methods=['GET', 'POST'])
 def clear():
 	return render_template('index.html')	

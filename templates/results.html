@@ -37,33 +37,39 @@
 
 
 <h3>Выгрузка по запросу "{{req}}"</h3>
-<table>
-	<tr>
-	<th>Имя вакансии</th>
-	<th>Город</th>
-	<th>Ссылка</th>
-	<th>Работодатель</th>
-	<th>ЗП (руб., Gross)</th>
-	</tr>
-		{%for index, row in vacancies_table.iterrows() %}
-		<tr>
-		<td>
-		{{row['name']}}
-		</td>
-		<td>
-		{{row['area']}}
-		</td>
-		<td>
-		{{row['url']}}
-		</td>
-		<td>
-		{{row['employer']}}
-		</td>
-		<td>
-		{{row['salary_gross_RUR']}}
-		</td>
-		</tr>
-		{%endfor %}
-</table>
-
+<div class=row>
+	<div class=column>
+		<table>
+			<tr>
+			<th>Имя вакансии</th>
+			<th>Город</th>
+			<th>Ссылка</th>
+			<th>Работодатель</th>
+			<th>ЗП (руб., Gross)</th>
+			</tr>
+				{%for index, row in vacancies_table.iterrows() %}
+				<tr>
+				<td>
+				{{row['name']}}
+				</td>
+				<td>
+				{{row['area']}}
+				</td>
+				<td>
+				{{row['url']}}
+				</td>
+				<td>
+				{{row['employer']}}
+				</td>
+				<td>
+				{{row['salary_gross_RUR']}}
+				</td>
+				</tr>
+				{%endfor %}
+		</table>
+	</div>
+	<div class=column>
+	<img src='/static/last_salary_hist_{{req}}.png'/>
+	</div>
+</div>
 {% endblock %}
