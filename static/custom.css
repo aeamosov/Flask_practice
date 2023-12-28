@@ -1,7 +1,8 @@
 table {
-	border-collapse: collapse;
-	border: 3px solid darkgreen;
-	text-align: center;
+	display: block;
+	table-layout:fixed;
+	width:100%;
+	word-break: break-word;
 }
 th,td {
 	padding: 4px;
@@ -11,15 +12,14 @@ th,td {
 }
 .column {
   float: left;
-  width: 40%;
+  width: 50%;
 }
 #clearBtn {
 	background-color:darkred;
 	border: 3px black;
-	padding:3px;}
+	padding:3px;
+	float:right;}
 #loading {
-	width: 5%;
-	heigh: 5%;
 	align: center;
     display: none;
     background: url(/static/loading.gif);

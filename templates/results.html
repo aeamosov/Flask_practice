@@ -14,8 +14,8 @@
 {% block title %}HH Parcer - Flask{% endblock %}
 {% block content %}
 
-<div id="controls" class="row">
-    <div id="input" class="column">
+<div id="controls" class="row justify-content-between">
+    <div id="input" class="col">
         <form method="POST" action ="/">
             <div class="form-group">
                 <label for="vacancy">Название вакансии:</label>
@@ -23,22 +23,23 @@
             </div>
             <button type="submit" class="btn btn-primary mt-3" onclick="loading();">Искать</button>
         </form>
-		<div id="loading">
-			<img src='/static/loading.gif'/>
-		</div>
+		
     </div>
-    <div id="clear" class="column">
+    <div id="clear" class="col">
     <form action="/clear/" method="post">
         <button id="clearBtn" name="clearBtn" type="submit" class="btn btn-primary mt-3">Очистить результаты</button>
     </form>
     </div>
 </div>
-
-
+<div class="d-flex align-items-center justify-content-center">
+	<div id="loading">
+		<img src='/static/loading.gif'/>
+	</div>
+</div>
 
 <h3>Выгрузка по запросу "{{req}}"</h3>
-<div class=row>
-	<div class=column>
+<div class="row">
+	<div class="col-7 bg-light p-3 border">
 		<table>
 			<tr>
 			<th>Имя вакансии</th>
@@ -68,8 +69,10 @@
 				{%endfor %}
 		</table>
 	</div>
-	<div class=column>
-	<img src="{{hist_img_path}}"/>
+	
+	<div class="col">
+	<img style="display:block; width:100%;" src="{{hist_img_path}}"/>
 	</div>
+	
 </div>
 {% endblock %}

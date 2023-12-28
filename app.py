@@ -5,7 +5,7 @@ import pandas as pd
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from transliterate import slugify
+import datetime as dt
 app = Flask(__name__)
 #conversion functions for salary
 conversion_rates = {'USD': 90,'EUR': 110,'KZT': 0.20}
@@ -89,7 +89,7 @@ def get_vacancies():
 		#Гистограмма
 		plt.clf()
 		plt.hist(df['salary_gross_RUR'])
-		hist_img_path="static/images/last_salary_hist_"+slugify(text)+".png"
+		hist_img_path="static/images/last_salary_hist_"+str(dt.datetime.now().timestamp())+".png"
 		plt.savefig(hist_img_path)
 		return render_template('results.html',vacancies_table=df,req=request.form['vacancy'],hist_img_path=hist_img_path)
 
