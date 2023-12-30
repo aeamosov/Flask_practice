@@ -39,34 +39,30 @@
 
 <h5>Выгрузка по запросу "{{req}}"</h5>
 <div class="row">
-	<div class="col-7 bg-light p-3 border">
+	<div class="col-md-7 d-flex flex-nowrap bg-light p-3 border">
 		<table>
 			<tr>
 			<th>ID</th>
 			<th>Имя вакансии</th>
 			<th>Город</th>
-			<th>Ссылка</th>
 			<th>Работодатель</th>
 			<th>ЗП (руб., Gross)</th>
 			</tr>
 				{%for index, row in vacancies_table.iterrows() %}
 				<tr>
-				<td>
-				{{row['vac_id']}}
+				<td style="width:12%;">
+				<a href={{row['url']}}>{{row['vac_id']}}</a>
 				</td>
-				<td style="width:25%;">
+				<td style="width:30%;">
 				{{row['name']}}
 				</td>
-				<td style="width:10%;">
+				<td style="width:15%;">
 				{{row['area']}}
 				</td>
-				<td>
-				{{row['url']}}
-				</td>
-				<td>
+				<td style="width:30%;">
 				{{row['employer']}}
 				</td>
-				<td>
+				<td style="width:13%;">
 				{{row['salary_gross_RUR']}}
 				</td>
 				</tr>
