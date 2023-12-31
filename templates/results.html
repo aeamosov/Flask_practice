@@ -7,11 +7,9 @@
         }
 // ]]>
 </script>
-<style>
-</style>
 </head>
 {% extends 'base.html' %}
-{% block title %}HH Parcer - Flask{% endblock %}
+{% block title %}HH Parcer{% endblock %}
 {% block content %}
 
 <div id="controls" class="row justify-content-between">
@@ -39,9 +37,10 @@
 
 <h5>Выгрузка по запросу "{{req}}"</h5>
 <div class="row">
-	<div class="col-md-7 d-flex flex-nowrap bg-light p-3 border">
-		<table>
-			<tr>
+	<div class="col-md-7 align-top d-flex flex-nowrap p-3 border order-sm-1 order-2">
+		<table class="table table-striped">
+			<tr style="background-color:lightblue;">
+			<th></th>
 			<th>Имя вакансии</th>
 			<th>Город</th>
 			<th>Работодатель</th>
@@ -49,6 +48,15 @@
 			</tr>
 				{%for index, row in vacancies_table.iterrows() %}
 				<tr>
+				<td>
+				<a href="/{{row['vac_id']}}">
+						<i style="color:red;"
+						class="fa fa-ban" 
+						aria-hidden="true" 
+						title="Убрать из подборки" 
+						onclick="return confirm('Вы хотите убрать из подборки вакансию {{row['name']}}?');"></i>
+					</a>
+				</td>
 				<td style="width:30%;">
 				<a href={{row['url']}}>{{row['name']}}</a>
 				</td>
@@ -66,9 +74,20 @@
 		</table>
 	</div>
 	
-	<div class="bd-placeholder-img col-md-5 float-md-end">
-	<img style="display:block; width:100%;" src="{{hist_img_path}}"/>
+	<div class="col-md-5 float-end order-1 p-3 border" >
+		<div class="row justify-content-center">
+			<table class="table table-striped mx-auto w-auto">
+			{% for key, value in stats.items() %}
+				<tr>
+					<td> {{ key }} </td>
+					<td> {{ value }} </td>
+				</tr>
+			{% endfor %}
+			</table>
+		</div>
+		<div class="bd-placeholder-img float-end" >
+			<img style="display:block; width:100%;" src="{{hist_img_path}}"/>
+		</div>
 	</div>
-	
 </div>
 {% endblock %}
